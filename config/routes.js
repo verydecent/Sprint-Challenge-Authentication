@@ -2,7 +2,7 @@ const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const db = require('../database/dbConfig');
 const jwt = require('jsonwebtoken');
-
+const jwtKey = require('../_secrets/keys.js').jwtKey;
 const { authenticate } = require('./middlewares');
 
 module.exports = server => {
@@ -52,7 +52,7 @@ function login(req, res) {
             }
         })
         .catch(err => {
-            res.status(500).json({ err });
+            res.status(500).json(err);
         });
 }
 
@@ -68,8 +68,6 @@ function getJokes(req, res) {
       res.status(500).json({ message: 'Error Fetching Jokes', error: err });
     });
 }
-
-const jwtSecret = 'nobody$tosses)a!dwarf!';
 function generateToken(user) {
     const jwtPayload = {
 	...user,
@@ -78,5 +76,5 @@ function generateToken(user) {
     const jwtOptions = {
 	expiresIn: '5m'
     };    
-    return jwt.sign(jwtPayload, jwtSecret, jwtOptions);
+  return jwt.sign(jwtPayload, jwtKey, jwtOptions);
 }
