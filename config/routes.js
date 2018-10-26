@@ -59,8 +59,7 @@ function login(req, res) {
 function getJokes(req, res) {
   axios
     .get(
-      // 'https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten'
-      'http:localhost:3300/api/jokes'
+      'https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten'
     )
     .then(response => {
       res.status(200).json(response.data);
@@ -74,8 +73,7 @@ const jwtSecret = 'nobody$tosses)a!dwarf!';
 function generateToken(user) {
     const jwtPayload = {
 	...user,
-	hello: 'FSW13',
-	role: 'admin'
+	userType: 'admin'
     };
     const jwtOptions = {
 	expiresIn: '5m'
